@@ -1,0 +1,19 @@
+name: Source integrity and syntax
+on:
+  push:
+  pull_request:
+
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Python without importing heavyweight frameworks
+        run: python -m compileall -q research_7b edge_vitb tests
+      - name: Standard-library source layout tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify original historical source file checksums
+        run: sha256sum -c docs/SOURCE_MANIFEST.sha256
