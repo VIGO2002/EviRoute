@@ -1,0 +1,14 @@
+# Install a PyTorch/CUDA build appropriate to your environment.
+# These are research dependencies, not a historical lockfile.
+torch
+torchvision
+timm
+numpy
+pandas
+scikit-learn
+scipy
+Pillow
+opencv-python
+matplotlib
+tqdm
+PyYAML

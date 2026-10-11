@@ -1,0 +1,32 @@
+# Python and IDE caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.vscode/
+.idea/
+.DS_Store
+# Large model/checkpoint artifacts
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.rknn
+# Dataset, feature cache, and experiment output
+datasets/
+features/
+checkpoints/
+outputs/
+results/
+logs/
+runs/
+wandb/
+*.npz
+*.npy
+*.log
+.env
