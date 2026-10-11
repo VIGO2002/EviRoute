@@ -1,0 +1,71 @@
+backbone:
+  family: DINOv3
+  alias: dinov3_vitb16
+  timm_name: vit_base_patch16_dinov3
+  input_size: 224
+  patch_size: 16
+  num_blocks: 12
+  mid_block: 6
+  feature_dim: 768
+  patch_grid: [14, 14]
+  num_patch_tokens: 196
+  num_prefix_tokens: 5
+  frozen: true
+
+feature_extraction:
+  layer: mid
+  output: raw_block_output
+  run_full_forward_features: true
+  remove_prefix_tokens: true
+  apply_final_backbone_norm: false
+  patch_dtype_reference: float16
+
+image_preprocess:
+  color_mode: RGB
+  resize: [224, 224]
+  interpolation: bicubic
+  crop: none
+  padding: none
+  tensor_range: [0.0, 1.0]
+  rgb_mean_std_normalization: none
+
+eviroute:
+  input_dim: 768
+  hidden_dim: 256
+  activation: GELU
+  dropout: 0.1
+  output_dim: 1
+  topk: 10
+  aggregation: mean
+
+feature_normalization:
+  enabled: true
+  source: checkpoint
+  dimension: 768
+  formula: "(x - mu) / std"
+
+training_reference:
+  seed: 42
+  epochs: 50
+  lr: 0.0001
+  weight_decay: 0.0001
+  batch_size: 16
+  token_dropout: 0.15
+
+eviroute_training_only:
+  edge1_dropout: 0.50
+  edge2_only_dropout: 0.25
+  lambda_edge1: 0.01
+  lambda_edge2: 0.0
+  rho_edge1: 0.4
+  rho_edge2: 0.6
+  min_auc_for_edge_select: 0.98182222
+  select_edge1_weight: 1.0
+  select_edge2_weight: 0.5
+  low_auc_penalty: 5.0
+
+inference:
+  token_dropout: false
+  edge_dropout: false
+  edge_penalty: false
+  checkpoint_selection: false
